@@ -16,6 +16,7 @@ provider "aws" {
 locals {
 
   VPC_name = "mylocalVPC"
+  EC2_name = "my-ec2"
 
 }
 
@@ -37,9 +38,11 @@ variable "image_id" {
   default = "ami-0583d8c7a9c35822c"
 }
 
-resource "aws_instance" "ec2" {
-   ami= var.image_id
-   instance_type = "t2.micro"
-   security_group = aws_security_group.main.id
+resource "aws_instance" "my-ec2" {
+    ami = var.image_id
+    instance_type = "t2.micro"
 
+    tags = {
+        NAME = local.EC2_name
+    }
 }
